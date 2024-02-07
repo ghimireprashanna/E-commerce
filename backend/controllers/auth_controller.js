@@ -1,6 +1,8 @@
+
 const User = require('../models/users')
 const {validationResult} = require('express-validator');
 const jwt = require('jsonwebtoken');
+const { expressjwt } = require('express-jwt');
 
 exports.signup = async (req, res) => {
     const errors = validationResult(req);
@@ -56,3 +58,34 @@ exports.login = async (req, res) => {
         .json({message: err.message || 'Not Able to save in Database'});
     }
 };
+
+exports.isSignedIn=expressjwt({
+    secret: process.env.SECRET,
+    requestProperty: 'auth',
+    algorithms: ["HS256"]
+})
+
+exports.isAuthenticated =(req, res, next) => {
+    console.log(req.auth)
+    console.log(req.user)
+
+    let checker = req.auth && req.user && req.auth._id == req.user._id
+    if (!checker) {
+        return res.status(403).json({
+            error: 'Authentication access denied',
+        });
+    }
+    next()
+}
+
+exports.isAdmin =(req, res, next) => {
+    if(req.user.role == 1) {
+        next();
+    } else{
+        return res.status(403).json({
+            error:'Admin access denied'
+        });
+    }
+}
+
+

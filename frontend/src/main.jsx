@@ -11,6 +11,8 @@ import Toaster from './module/common/Toaster/index.jsx'
 import ToastProvider from './context/toast/ToastProvider.jsx'
 import BlockAuthRoute from './routes/BlockAuthRoute.jsx'
 import PrivateRoute from './routes/PrivateRoute.jsx'
+import Dashboard from './module/admin/Dashboard/index.jsx'
+import Users from './module/admin/Users/index.jsx'
 
 const router = createBrowserRouter([
   {
@@ -19,15 +21,29 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <PrivateRoute><Home/></PrivateRoute>
+        element: <Home/>
       },
       {
-        path: '/signup',
+        path: 'signup',
         element: <BlockAuthRoute><Signup/></BlockAuthRoute>
       },
       {
-        path: '/login',
+        path: 'login',
         element: <BlockAuthRoute><Login/></BlockAuthRoute>
+      },
+      {
+        path: 'admin',
+        element: <Dashboard/>,
+        children: [
+          {
+            path: 'dashboard',
+            element: <Home/>
+          },
+          {
+            path: 'users',
+            element: <Users/>
+          },
+        ]
       }
     ],
   }

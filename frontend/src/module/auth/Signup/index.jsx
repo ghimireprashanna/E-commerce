@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-const Signup = () => {
+const Signup = (setShowModal = undefined) => {
   
     let userSchema = object({
       name: string().required(),
@@ -43,6 +43,9 @@ const Signup = () => {
       console.log(apiUrl);
       axios.post(`${apiUrl}/api/users/signup`,data).then(res=>{
           console.log(res.data);
+          if(setShowModal){
+            setShowModal(false);
+          }
       }).catch(err => {
         console.log(err);
       });
