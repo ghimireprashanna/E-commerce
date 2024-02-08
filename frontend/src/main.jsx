@@ -13,6 +13,8 @@ import BlockAuthRoute from './routes/BlockAuthRoute.jsx'
 import PrivateRoute from './routes/PrivateRoute.jsx'
 import Dashboard from './module/admin/Dashboard/index.jsx'
 import Users from './module/admin/Users/index.jsx'
+import Products from './module/admin/Products/index.jsx'
+
 
 const router = createBrowserRouter([
   {
@@ -41,6 +43,14 @@ const router = createBrowserRouter([
           },
           {
             path: 'users',
+            element: <Users/>
+          },
+          {
+            path: 'products',
+            element: <Products/>
+          },
+          {
+            path: 'brands',
             element: <Users/>
           },
         ]
